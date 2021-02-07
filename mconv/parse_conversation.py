@@ -4,6 +4,7 @@ from mconv.conversation import Conversation
 from mconv.line import Line
 
 
+KEYWORD_FUNCTION_PREFIX = 'function-prefix'
 KEYWORD_SPEAKER_NAME = 'speaker-name'
 KEYWORD_DEFAULT_SPEAK_TIME_SEC = 'default-speak-time-sec'
 KEYWORD_CONVERSATION = 'conversation'
@@ -18,6 +19,7 @@ def parse_conversation(yaml_conversation: str) -> Conversation:
 
 def string_to_yaml(yaml_conversation: str) -> YAML:
     schema = Map({
+        KEYWORD_FUNCTION_PREFIX: Str(),
         KEYWORD_SPEAKER_NAME: Str(),
         KEYWORD_DEFAULT_SPEAK_TIME_SEC: Int(),
         KEYWORD_CONVERSATION: Seq(
@@ -41,12 +43,13 @@ class YamlConversationParser:
         self.default_speak_time_sec = yaml[KEYWORD_DEFAULT_SPEAK_TIME_SEC].value
 
     def parse_conversation(self) -> Conversation:
+        function_prefix = self.yaml[KEYWORD_FUNCTION_PREFIX].value
         speaker_name = self.yaml[KEYWORD_SPEAKER_NAME].value
         yaml_lines = self.yaml[KEYWORD_CONVERSATION]
 
         lines = [self.read_line(yaml_line) for yaml_line in yaml_lines]
 
-        return Conversation(speaker_name, lines)
+        return Conversation(function_prefix, speaker_name, lines)
 
     def read_line(self, yaml_line: YAML) -> Line:
         text = yaml_line[KEYWORD_SAY].value

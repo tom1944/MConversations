@@ -8,6 +8,7 @@ from mconv.parse_conversation import parse_conversation
 class ParseConversationTest(unittest.TestCase):
     def test_parse_simple_conversation(self):
         simple_conversation_str = '\n'.join([
+            'function-prefix: mynamespace:path/to/dir',
             'speaker-name: Erik',
             'default-speak-time-sec: 2',
             'conversation:',
@@ -18,6 +19,7 @@ class ParseConversationTest(unittest.TestCase):
         ])
 
         expected_conversation = Conversation(
+            'mynamespace:path/to/dir',
             'Erik',
             [
                 Line('Hello!', speak_time=2),

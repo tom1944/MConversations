@@ -7,11 +7,20 @@ A tool to generate NPC conversations in minecraft
 `pip install strictyaml==1.3.2`
 
 ## How to use
-See `conv-example.yaml` for an  example conversation file.
+- Create your conversation file `conv.yaml`:
+```yaml
+function-prefix: mynamespace:path/to/dir
+speaker-name: Erik
+default-speak-time-sec: 2
+conversation:
+  - say: Hello!
+  - say: This is a very long text that requires 3 seconds of reading time
+    speak-time-sec: 3
+  - say: This is the end...
+```
 
-- Run ```python mconv.py conv-example.yaml```
-to create a minecraft function file `conv-example.mcfunction`.
 
-- Place this file in your datapack under `<data-pack-name>/data/<namespace>/functions`.
+- Run ```python mconv.py conv.yaml``` to create a set of function files.
+Place these files in `mydatapack/data/mynamespace/functions/path/to/dir`.
 
 See [this minecraft wiki page](https://minecraft.gamepedia.com/Data_Pack) for more info about data packs.
