@@ -1,4 +1,3 @@
-conversation-name: casual-talk
 default-pause-time-sec: 2
 conversation:
   - say: Hello!
