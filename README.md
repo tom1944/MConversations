@@ -9,7 +9,7 @@ A tool to generate NPC conversations in minecraft
 ## How to use
 - Create your conversation file `conv.yaml`:
 ```yaml
-function-prefix: mynamespace:path/to/dir
+function-prefix: mynamespace:path/to/dir/
 speaker-name: Erik
 default-speak-time-sec: 2
 conversation:
