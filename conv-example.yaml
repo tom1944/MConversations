@@ -1,7 +1,0 @@
-speaker-name: Erik
-default-pause-time-sec: 2
-conversation:
-  - say: Hello!
-  - say: This is a very long text that requires 3 seconds of reading time
-    pause-time-sec: 3
-  - say: This is the end...
