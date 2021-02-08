@@ -56,6 +56,6 @@ class FunctionCreator:
 
 def _make_schedule_command(func: Function, time: int) -> str:
     if time == 0:
-        return func.commands[0]
+        return f'function {func.get_identifier()}'
     else:
         return f'schedule function {func.get_identifier()} {time}s'
