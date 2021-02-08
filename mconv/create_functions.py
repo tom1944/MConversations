@@ -41,12 +41,21 @@ class FunctionCreator:
             commands=self._make_commands_from_line_functions(line_functions)
         )
 
-    def _make_commands_from_line_functions(self, line_functions) -> List[str]:
+    def _make_commands_from_line_functions(self, line_functions: List[Function]) -> List[str]:
         commands = []
         time = 0
+
         for line, func in zip(self.conversation.lines, line_functions):
             commands.append(
-                f'schedule function {func.get_identifier()} {time}s'
+                _make_schedule_command(func, time)
             )
             time += line.speak_time
+
         return commands
+
+
+def _make_schedule_command(func: Function, time: int) -> str:
+    if time == 0:
+        return func.commands[0]
+    else:
+        return f'schedule function {func.get_identifier()} {time}s'
