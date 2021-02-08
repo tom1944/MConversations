@@ -46,7 +46,7 @@ class FunctionCreator:
         time = 0
         for line, func in zip(self.conversation.lines, line_functions):
             commands.append(
-                f'schedule function {func.get_identifier()} {time}'
+                f'schedule function {func.get_identifier()} {time}s'
             )
             time += line.speak_time
         return commands

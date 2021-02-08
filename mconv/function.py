@@ -13,7 +13,7 @@ class Function:
         file_name = f'{self.name}.{FUNCTION_FILE_EXTENSION}'
 
         with open(file_name, 'w') as outfile:
-            outfile.writelines(self.commands)
+            outfile.write('\n'.join(self.commands))
 
     def get_identifier(self) -> str:
         return self.prefix + self.name

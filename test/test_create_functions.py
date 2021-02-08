@@ -26,9 +26,9 @@ class CreateFunctionsTest(unittest.TestCase):
                 name='conv1',
                 prefix=function_prefix,
                 commands=[
-                    'schedule function mynamespace:path/to/dir/conv1_1 0',
-                    'schedule function mynamespace:path/to/dir/conv1_2 2',
-                    'schedule function mynamespace:path/to/dir/conv1_3 5',
+                    'schedule function mynamespace:path/to/dir/conv1_1 0s',
+                    'schedule function mynamespace:path/to/dir/conv1_2 2s',
+                    'schedule function mynamespace:path/to/dir/conv1_3 5s',
                 ]
             ),
             Function(
