@@ -28,7 +28,7 @@ class CreateFunctionsTest(unittest.TestCase):
                 commands=[
                     'schedule function mynamespace:path/to/dir/conv1_1 0',
                     'schedule function mynamespace:path/to/dir/conv1_2 2',
-                    'schedule function mynamespace:path/to/dir/conv1_2 5',
+                    'schedule function mynamespace:path/to/dir/conv1_3 5',
                 ]
             ),
             Function(

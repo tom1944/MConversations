@@ -15,7 +15,7 @@ class Function:
         with open(file_name, 'w') as outfile:
             outfile.writelines(self.commands)
 
-    def get_function_identifier(self) -> str:
+    def get_identifier(self) -> str:
         return self.prefix + self.name
 
     def __eq__(self, other):
