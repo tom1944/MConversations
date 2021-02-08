@@ -23,7 +23,7 @@ class FunctionCreator:
             Function(
                 name=self.conversation.name + '_' + str(index),
                 prefix=self.conversation.function_prefix,
-                commands=[f'tellraw @s {self._raw_json_text_for_line(line, index)}']
+                commands=[f'tellraw @a {self._raw_json_text_for_line(line, index)}']
             )
             for index, line in enumerate(self.conversation.lines, start=1)
         ]
