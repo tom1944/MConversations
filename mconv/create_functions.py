@@ -32,7 +32,11 @@ class FunctionCreator:
         speaker_name = self.conversation.speaker_name
         total_lines = len(self.conversation.lines)
 
-        return f'"({index}/{total_lines}) {speaker_name}: {line.text}"'
+        index_part = '{"text":"(' + str(index) + '/' + str(total_lines) + ') ","bold":true,"color":"gray"}'
+        speaker_part = '{"text":"' + speaker_name + ': ","bold":true,"color":"yellow"}'
+        text_part = '{"text":"' + line.text + '","color":"yellow"}'
+
+        return '[' + ','.join(['""', index_part, speaker_part, text_part]) + ']'
 
     def _make_conversation_function(self, line_functions: List[Function]) -> Function:
         return Function(

@@ -35,21 +35,33 @@ class CreateFunctionsTest(unittest.TestCase):
                 name='conv1_1',
                 prefix=function_prefix,
                 commands=[
-                    'tellraw @a "(1/3) Erik: Hello!"'
+                    'tellraw @a ["",'
+                    '{"text":"(1/3) ","bold":true,"color":"gray"},'
+                    '{"text":"Erik: ","bold":true,"color":"yellow"},'
+                    '{"text":"Hello!","color":"yellow"}'
+                    ']'
                 ]
             ),
             Function(
                 name='conv1_2',
                 prefix=function_prefix,
                 commands=[
-                    'tellraw @a "(2/3) Erik: This is a very long text that requires 3 seconds of reading time"'
+                    'tellraw @a ["",'
+                    '{"text":"(2/3) ","bold":true,"color":"gray"},'
+                    '{"text":"Erik: ","bold":true,"color":"yellow"},'
+                    '{"text":"This is a very long text that requires 3 seconds of reading time","color":"yellow"}'
+                    ']'
                 ]
             ),
             Function(
                 name='conv1_3',
                 prefix=function_prefix,
                 commands=[
-                    'tellraw @a "(3/3) Erik: This is the end..."'
+                    'tellraw @a ["",'
+                    '{"text":"(3/3) ","bold":true,"color":"gray"},'
+                    '{"text":"Erik: ","bold":true,"color":"yellow"},'
+                    '{"text":"This is the end...","color":"yellow"}'
+                    ']'
                 ]
             ),
         ]
