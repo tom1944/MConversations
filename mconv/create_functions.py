@@ -20,13 +20,16 @@ class FunctionCreator:
 
     def _make_line_functions(self) -> List[Function]:
         return [
-            Function(
-                name=self.conversation.name + '_' + str(index),
-                prefix=self.conversation.function_prefix,
-                commands=[f'tellraw @a {self._raw_json_text_for_line(line, index)}']
-            )
+            self.make_line_function(line, index)
             for index, line in enumerate(self.conversation.lines, start=1)
         ]
+
+    def make_line_function(self, line: Line, index: int):
+        return Function(
+            name=self.conversation.name + '_' + str(index),
+            prefix=self.conversation.function_prefix,
+            commands=[f'tellraw @a {self._raw_json_text_for_line(line, index)}']
+        )
 
     def _raw_json_text_for_line(self, line: Line, index: int) -> str:
         speaker_name = self.conversation.speaker_name
