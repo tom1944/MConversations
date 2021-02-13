@@ -14,3 +14,12 @@ class MConvTest(unittest.TestCase):
         actual_functions = create_functions(conversation)
 
         self.assertCountEqual(expected_functions, actual_functions)
+
+    def test_conversation_containing_json_text(self):
+        simple_conversation_yaml = fixture.make_conversation_using_json_text_yaml()
+        expected_functions = fixture.make_conversation_using_json_text_functions()
+
+        conversation = parse_conversation("conv2", simple_conversation_yaml)
+        actual_functions = create_functions(conversation)
+
+        self.assertCountEqual(expected_functions, actual_functions)

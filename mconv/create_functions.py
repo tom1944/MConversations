@@ -88,15 +88,21 @@ class LineFunctionCreator:
 
     def make_json_text_for_speaker_part(self) -> JSONText:
         speaker_name = self.conversation_context.speaker_name
-        speaker_part = OrderedDict([
-            ("text", speaker_name),
-            ("color", "yellow"),
-            ("bold", True),
-        ])
-        return speaker_part
+
+        if isinstance(speaker_name, str):
+            return OrderedDict([
+                ("text", speaker_name),
+                ("color", "yellow"),
+                ("bold", True),
+            ])
+        else:
+            return speaker_name
 
     def _make_json_text_for_text_part(self) -> JSONText:
-        return OrderedDict([
-            ("text", self.line.text),
-            ("color", "yellow"),
-        ])
+        if isinstance(self.line.text, str):
+            return OrderedDict([
+                ("text", self.line.text),
+                ("color", "yellow"),
+            ])
+        else:
+            return self.line.text

@@ -1,5 +1,8 @@
+from mconv.json_text import JSONText
+
+
 class Line:
-    def __init__(self, text: str, speak_time: int):
+    def __init__(self, text: JSONText, speak_time: int):
         self.text = text
         self.speak_time = speak_time
 

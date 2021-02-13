@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from typing import List
 
 from mconv.conversation import Conversation
@@ -72,6 +73,59 @@ def make_simple_conversation_functions() -> List[Function]:
                     '{"text": "(3/3) ", "color": "gray", "bold": true}, '
                     '{"text": "Erik: ", "color": "yellow", "bold": true}, '
                     '{"text": "This is the end...", "color": "yellow"}'
+                    ']'
+                ]
+            ),
+        ]
+
+
+def make_conversation_using_json_text_yaml() -> str:
+    return '\n'.join([
+        'function-prefix: mynamespace:mydir/',
+        'speaker-name: {"text": "Erik", "color": "red"}',
+        'default-speak-time-sec: 2',
+        'conversation:',
+        '  - say: {"text": "Hello!", "color": "blue"}',
+    ])
+
+
+def make_conversation_using_json_text_object() -> Conversation:
+    return Conversation(
+        'conv2',
+        'mynamespace:mydir/',
+        speaker_name=OrderedDict([
+            ("text", "Erik"),
+            ("color", "red"),
+        ]),
+        lines=[
+            Line(
+                OrderedDict([
+                    ("text", "Hello!"),
+                    ("color", "blue"),
+                ]),
+                speak_time=2
+            ),
+        ]
+    )
+
+
+def make_conversation_using_json_text_functions() -> List[Function]:
+    return [
+            Function(
+                name='conv2',
+                prefix='mynamespace:mydir/',
+                commands=[
+                    'function mynamespace:mydir/conv2_1',
+                ]
+            ),
+            Function(
+                name='conv2_1',
+                prefix='mynamespace:mydir/',
+                commands=[
+                    'tellraw @a ["", '
+                    '{"text": "(1/1) ", "color": "gray", "bold": true}, '
+                    '{"text": "Erik: ", "color": "red"}, '
+                    '{"text": "Hello!", "color": "blue"}'
                     ']'
                 ]
             ),

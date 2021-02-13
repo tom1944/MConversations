@@ -1,11 +1,12 @@
 import copy
 from typing import List
 
+from mconv.json_text import JSONText
 from mconv.line import Line
 
 
 class Conversation:
-    def __init__(self, name: str, function_prefix: str, speaker_name: str, lines: List[Line]):
+    def __init__(self, name: str, function_prefix: str, speaker_name: JSONText, lines: List[Line]):
         self.name = name
         self.function_prefix = function_prefix
         self.speaker_name = speaker_name
