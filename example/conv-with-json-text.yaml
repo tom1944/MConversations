@@ -1,0 +1,5 @@
+function-prefix: mynamespace:mydir/
+speaker-name: {"text": "Erik", "color": "red"}
+default-speak-time-sec: 2
+conversation:
+  - say: {"text": "Hello!", "color": "blue"}
