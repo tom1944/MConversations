@@ -35,10 +35,10 @@ class CreateFunctionsTest(unittest.TestCase):
                 name='conv1_1',
                 prefix=function_prefix,
                 commands=[
-                    'tellraw @a ["",'
-                    '{"text":"(1/3) ","bold":true,"color":"gray"},'
-                    '{"text":"Erik: ","bold":true,"color":"yellow"},'
-                    '{"text":"Hello!","color":"yellow"}'
+                    'tellraw @a ["", '
+                    '{"text": "(1/3) ", "color": "gray", "bold": true}, '
+                    '{"text": "Erik: ", "color": "yellow", "bold": true}, '
+                    '{"text": "Hello!", "color": "yellow"}'
                     ']'
                 ]
             ),
@@ -46,10 +46,10 @@ class CreateFunctionsTest(unittest.TestCase):
                 name='conv1_2',
                 prefix=function_prefix,
                 commands=[
-                    'tellraw @a ["",'
-                    '{"text":"(2/3) ","bold":true,"color":"gray"},'
-                    '{"text":"Erik: ","bold":true,"color":"yellow"},'
-                    '{"text":"This is a very long text that requires 3 seconds of reading time","color":"yellow"}'
+                    'tellraw @a ["", '
+                    '{"text": "(2/3) ", "color": "gray", "bold": true}, '
+                    '{"text": "Erik: ", "color": "yellow", "bold": true}, '
+                    '{"text": "This is a very long text that requires 3 seconds of reading time", "color": "yellow"}'
                     ']'
                 ]
             ),
@@ -57,10 +57,10 @@ class CreateFunctionsTest(unittest.TestCase):
                 name='conv1_3',
                 prefix=function_prefix,
                 commands=[
-                    'tellraw @a ["",'
-                    '{"text":"(3/3) ","bold":true,"color":"gray"},'
-                    '{"text":"Erik: ","bold":true,"color":"yellow"},'
-                    '{"text":"This is the end...","color":"yellow"}'
+                    'tellraw @a ["", '
+                    '{"text": "(3/3) ", "color": "gray", "bold": true}, '
+                    '{"text": "Erik: ", "color": "yellow", "bold": true}, '
+                    '{"text": "This is the end...", "color": "yellow"}'
                     ']'
                 ]
             ),

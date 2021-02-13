@@ -1,3 +1,5 @@
+import json
+from collections import OrderedDict
 from typing import List
 
 from mconv.conversation import Conversation
@@ -24,7 +26,7 @@ class FunctionCreator:
             for index, line in enumerate(self.conversation.lines, start=1)
         ]
 
-    def make_line_function(self, line: Line, index: int):
+    def make_line_function(self, line: Line, index: int) -> Function:
         return Function(
             name=self.conversation.name + '_' + str(index),
             prefix=self.conversation.function_prefix,
@@ -35,11 +37,24 @@ class FunctionCreator:
         speaker_name = self.conversation.speaker_name
         total_lines = len(self.conversation.lines)
 
-        index_part = '{"text":"(' + str(index) + '/' + str(total_lines) + ') ","bold":true,"color":"gray"}'
-        speaker_part = '{"text":"' + speaker_name + ': ","bold":true,"color":"yellow"}'
-        text_part = '{"text":"' + line.text + '","color":"yellow"}'
+        index_part = OrderedDict([
+            ("text", "(" + str(index) + "/" + str(total_lines) + ") "),
+            ("color", "gray"),
+            ("bold", True),
+        ])
+        speaker_part = OrderedDict([
+            ("text", speaker_name + ": "),
+            ("color", "yellow"),
+            ("bold", True),
+        ])
+        text_part = OrderedDict([
+            ("text", line.text),
+            ("color", "yellow"),
+        ])
 
-        return '[' + ','.join(['""', index_part, speaker_part, text_part]) + ']'
+        json_text_as_json_object = ["", index_part, speaker_part, text_part]
+
+        return json.dumps(json_text_as_json_object)
 
     def _make_conversation_function(self, line_functions: List[Function]) -> Function:
         return Function(
