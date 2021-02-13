@@ -25,3 +25,4 @@ Place these files in `mydatapack/data/mynamespace/functions/path/to/dir`.
 - Run the command `/function mynamespace:path/to/dir/conv` to play the conversation to all players
 
 See [this minecraft wiki page](https://minecraft.gamepedia.com/Data_Pack) for more info about data packs.
+Json text for the speaker name and say commands are allowed. See `example/conv-with-json-text.yaml` for an example.
