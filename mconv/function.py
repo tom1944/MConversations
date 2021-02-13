@@ -24,3 +24,6 @@ class Function:
         return self.name == other.name\
             and self.prefix == other.prefix\
             and self.commands == other.commands
+
+    def __repr__(self):
+        return f'Function({self.name}, {self.prefix}, {self.commands})'

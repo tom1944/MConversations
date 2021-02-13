@@ -68,7 +68,8 @@ class CreateFunctionsTest(unittest.TestCase):
 
         actual_functions = create_functions(conversation)
 
-        self.assertEqual(expected_functions, actual_functions)
+        for expected, actual in zip(expected_functions, actual_functions):
+            self.assertEqual(expected, actual)
 
 
 if __name__ == '__main__':
