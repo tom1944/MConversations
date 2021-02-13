@@ -1,0 +1,8 @@
+function-prefix: mynamespace:path/to/dir/
+speaker-name: Erik
+default-speak-time-sec: 2
+conversation:
+  - say: Hello!
+  - say: This is a very long text that requires 3 seconds of reading time
+    speak-time-sec: 3
+  - say: This is the end...
