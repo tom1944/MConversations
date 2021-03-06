@@ -1,21 +1,16 @@
 from collections import OrderedDict
-from typing import List
+from typing import List, Tuple
 
 from mconv.conversation import Conversation
 from mconv.minecraft.function import Function
 from mconv.minecraft.line import Line
 
 
-def make_simple_conversation_yaml() -> str:
-    return '\n'.join([
-        'speaker-name: Erik',
-        'default-speak-time-sec: 2',
-        'conversation:',
-        '  - say: Hello!',
-        '  - say: This is a very long text that requires 3 seconds of reading time',
-        '    speak-time-sec: 3',
-        '  - say: This is the end...',
-    ])
+def make_simple_conversation_yaml() -> Tuple[str, str]:
+    with open('example-datapack/data/mynamespace/functions/conv.yaml') as file:
+        yaml = file.read()
+
+    return 'mynamespace:', yaml
 
 
 def make_simple_conversation_object() -> Conversation:
@@ -78,13 +73,11 @@ def make_simple_conversation_functions() -> List[Function]:
         ]
 
 
-def make_conversation_using_json_text_yaml() -> str:
-    return '\n'.join([
-        'speaker-name: {"text": "Erik", "color": "red"}',
-        'default-speak-time-sec: 2',
-        'conversation:',
-        '  - say: {"text": "Hello!", "color": "blue"}',
-    ])
+def make_conversation_using_json_text_yaml() -> Tuple[str, str]:
+    with open('example-datapack/data/mynamespace/functions/mydir/conv-with-json-text.yaml') as file:
+        yaml = file.read()
+
+    return 'mynamespace:mydir/', yaml
 
 
 def make_conversation_using_json_text_object() -> Conversation:
