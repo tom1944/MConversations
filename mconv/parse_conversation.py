@@ -1,6 +1,6 @@
 from strictyaml import dirty_load, YAML, Map, Int, Seq, Optional, Any
 
-from mconv.conversation import Conversation
+from mconv.conversation import Conversation, ConversationContext
 from mconv.minecraft.line import Line
 
 
@@ -11,9 +11,9 @@ KEYWORD_SAY = 'say'
 KEYWORD_SPEAK_TIME_SEC = 'speak-time-sec'
 
 
-def parse_conversation(conv_name: str, yaml_conversation: str, function_prefix: str) -> Conversation:
+def parse_conversation(conv_ctx: ConversationContext, yaml_conversation: str) -> Conversation:
     yaml = string_to_yaml(yaml_conversation)
-    return YamlConversationParser(conv_name, yaml, function_prefix).parse_conversation()
+    return YamlConversationParser(conv_ctx, yaml).parse_conversation()
 
 
 def string_to_yaml(yaml_conversation: str) -> YAML:
@@ -32,20 +32,22 @@ def string_to_yaml(yaml_conversation: str) -> YAML:
 
 
 class YamlConversationParser:
-    def __init__(self, conv_name: str, yaml: YAML, function_prefix: str):
-        self.conv_name = conv_name
+    def __init__(self, conversation_context: ConversationContext, yaml: YAML):
+        self.conv_ctx = conversation_context
         self.yaml_data = yaml.data
-        self.function_prefix = function_prefix
         self.default_speak_time_sec = yaml[KEYWORD_DEFAULT_SPEAK_TIME_SEC].value
 
     def parse_conversation(self) -> Conversation:
-        function_prefix = self.function_prefix
+        function_prefix = self.conv_ctx.namespace + ':'
+        if not self.conv_ctx.path_in_functions == '':
+            function_prefix += self.conv_ctx.path_in_functions + '/'
+
         speaker_name = self.yaml_data[KEYWORD_SPEAKER_NAME]
         yaml_lines = self.yaml_data[KEYWORD_CONVERSATION]
 
         lines = [self.read_line(yaml_line) for yaml_line in yaml_lines]
 
-        return Conversation(self.conv_name, function_prefix, speaker_name, lines)
+        return Conversation(self.conv_ctx.name, function_prefix, speaker_name, lines)
 
     def read_line(self, yaml_line) -> Line:
         text = yaml_line[KEYWORD_SAY]

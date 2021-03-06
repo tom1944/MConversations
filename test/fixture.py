@@ -1,21 +1,21 @@
 from collections import OrderedDict
 from typing import List, Tuple
 
-from mconv.conversation import Conversation
+from mconv.conversation import Conversation, ConversationContext
 from mconv.minecraft.function import Function
 from mconv.minecraft.line import Line
 
 
-def make_simple_conversation_yaml() -> Tuple[str, str]:
+def make_simple_conversation_yaml() -> Tuple[ConversationContext, str]:
     with open('example-datapack/data/mynamespace/functions/conv.yaml') as file:
         yaml = file.read()
 
-    return 'mynamespace:', yaml
+    return ConversationContext('mynamespace', '', 'conv'), yaml
 
 
 def make_simple_conversation_object() -> Conversation:
     return Conversation(
-        'conv1',
+        'conv',
         'mynamespace:',
         'Erik',
         [
@@ -29,16 +29,16 @@ def make_simple_conversation_object() -> Conversation:
 def make_simple_conversation_functions() -> List[Function]:
     return [
             Function(
-                name='conv1',
+                name='conv',
                 prefix='mynamespace:',
                 commands=[
-                    'function mynamespace:conv1_1',
-                    'schedule function mynamespace:conv1_2 2s',
-                    'schedule function mynamespace:conv1_3 5s',
+                    'function mynamespace:conv_1',
+                    'schedule function mynamespace:conv_2 2s',
+                    'schedule function mynamespace:conv_3 5s',
                 ]
             ),
             Function(
-                name='conv1_1',
+                name='conv_1',
                 prefix='mynamespace:',
                 commands=[
                     'tellraw @a ["", '
@@ -49,7 +49,7 @@ def make_simple_conversation_functions() -> List[Function]:
                 ]
             ),
             Function(
-                name='conv1_2',
+                name='conv_2',
                 prefix='mynamespace:',
                 commands=[
                     'tellraw @a ["", '
@@ -60,7 +60,7 @@ def make_simple_conversation_functions() -> List[Function]:
                 ]
             ),
             Function(
-                name='conv1_3',
+                name='conv_3',
                 prefix='mynamespace:',
                 commands=[
                     'tellraw @a ["", '
@@ -73,16 +73,16 @@ def make_simple_conversation_functions() -> List[Function]:
         ]
 
 
-def make_conversation_using_json_text_yaml() -> Tuple[str, str]:
+def make_conversation_using_json_text_yaml() -> Tuple[ConversationContext, str]:
     with open('example-datapack/data/mynamespace/functions/mydir/conv-with-json-text.yaml') as file:
         yaml = file.read()
 
-    return 'mynamespace:mydir/', yaml
+    return ConversationContext('mynamespace', 'mydir', 'conv-with-json-text'), yaml
 
 
 def make_conversation_using_json_text_object() -> Conversation:
     return Conversation(
-        'conv2',
+        'conv-with-json-text',
         'mynamespace:mydir/',
         speaker_name=OrderedDict([
             ("text", "Erik"),
@@ -103,14 +103,14 @@ def make_conversation_using_json_text_object() -> Conversation:
 def make_conversation_using_json_text_functions() -> List[Function]:
     return [
             Function(
-                name='conv2',
+                name='conv-with-json-text',
                 prefix='mynamespace:mydir/',
                 commands=[
-                    'function mynamespace:mydir/conv2_1',
+                    'function mynamespace:mydir/conv-with-json-text_1',
                 ]
             ),
             Function(
-                name='conv2_1',
+                name='conv-with-json-text_1',
                 prefix='mynamespace:mydir/',
                 commands=[
                     'tellraw @a ["", '
