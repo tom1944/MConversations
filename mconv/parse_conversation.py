@@ -1,4 +1,4 @@
-from strictyaml import dirty_load, YAML, Map, Str, Int, Seq, Optional, Any
+from strictyaml import dirty_load, YAML, Map, Int, Seq, Optional, Any
 
 from mconv.conversation import Conversation
 from mconv.minecraft.line import Line

@@ -1,5 +1,5 @@
 import copy
-from typing import List
+from typing import List, NamedTuple
 
 from mconv.minecraft.json_text import JSONText
 from mconv.minecraft.line import Line
@@ -19,3 +19,9 @@ class Conversation:
             and self.function_prefix == other.function_prefix\
             and self.speaker_name == other.speaker_name\
             and self.lines == other.lines
+
+
+class ConversationContext(NamedTuple):
+    namespace: str
+    path_in_functions: str
+    name: str
