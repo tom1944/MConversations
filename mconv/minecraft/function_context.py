@@ -30,3 +30,10 @@ class FunctionContext:
             self.path_in_functions_dir,
             filename,
         )
+
+    def __eq__(self, other):
+        if not isinstance(other, FunctionContext):
+            return False
+        return self.namespace == other.namespace \
+            and self.path_in_functions_dir == other.path_in_functions_dir\
+            and self.function_name == other.function_name
