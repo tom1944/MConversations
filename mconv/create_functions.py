@@ -3,9 +3,9 @@ from collections import OrderedDict
 from typing import List
 
 from mconv.conversation import Conversation
-from mconv.function import Function
-from mconv.json_text import JSONText
-from mconv.line import Line
+from mconv.minecraft.function import Function
+from mconv.minecraft.json_text import JSONText
+from mconv.minecraft.line import Line
 
 
 def create_functions(conversation: Conversation) -> List[Function]:

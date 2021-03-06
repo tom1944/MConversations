@@ -1,4 +1,4 @@
-from mconv.json_text import JSONText
+from mconv.minecraft.json_text import JSONText
 
 
 class Line:

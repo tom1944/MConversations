@@ -1,7 +1,7 @@
 from strictyaml import dirty_load, YAML, Map, Str, Int, Seq, Optional, Any
 
 from mconv.conversation import Conversation
-from mconv.line import Line
+from mconv.minecraft.line import Line
 
 
 KEYWORD_FUNCTION_PREFIX = 'function-prefix'

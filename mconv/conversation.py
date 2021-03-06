@@ -1,8 +1,8 @@
 import copy
 from typing import List
 
-from mconv.json_text import JSONText
-from mconv.line import Line
+from mconv.minecraft.json_text import JSONText
+from mconv.minecraft.line import Line
 
 
 class Conversation:

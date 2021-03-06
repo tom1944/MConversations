@@ -2,8 +2,8 @@ from collections import OrderedDict
 from typing import List
 
 from mconv.conversation import Conversation
-from mconv.function import Function
-from mconv.line import Line
+from mconv.minecraft.function import Function
+from mconv.minecraft.line import Line
 
 
 def make_simple_conversation_yaml() -> str:
