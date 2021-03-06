@@ -9,7 +9,7 @@ class ParseConversationTest(unittest.TestCase):
         simple_conversation_yaml = fixture.make_simple_conversation_yaml()
         expected_conversation = fixture.make_simple_conversation_object()
 
-        conversation = parse_conversation('conv1', simple_conversation_yaml)
+        conversation = parse_conversation('conv1', simple_conversation_yaml, 'mynamespace:')
 
         self.assertEqual(expected_conversation.speaker_name, conversation.speaker_name)
         self.assertEqual(expected_conversation.function_prefix, conversation.function_prefix)
@@ -19,7 +19,7 @@ class ParseConversationTest(unittest.TestCase):
         simple_conversation_yaml = fixture.make_conversation_using_json_text_yaml()
         expected_conversation = fixture.make_conversation_using_json_text_object()
 
-        conversation = parse_conversation('conv2', simple_conversation_yaml)
+        conversation = parse_conversation('conv2', simple_conversation_yaml, 'mynamespace:mydir/')
 
         self.assertEqual(expected_conversation.speaker_name, conversation.speaker_name)
         self.assertEqual(expected_conversation.function_prefix, conversation.function_prefix)

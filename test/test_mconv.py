@@ -10,7 +10,7 @@ class MConvTest(unittest.TestCase):
         simple_conversation_yaml = fixture.make_simple_conversation_yaml()
         expected_functions = fixture.make_simple_conversation_functions()
 
-        conversation = parse_conversation("conv1", simple_conversation_yaml)
+        conversation = parse_conversation('conv1', simple_conversation_yaml, 'mynamespace:')
         actual_functions = create_functions(conversation)
 
         self.assertCountEqual(expected_functions, actual_functions)
@@ -19,7 +19,7 @@ class MConvTest(unittest.TestCase):
         simple_conversation_yaml = fixture.make_conversation_using_json_text_yaml()
         expected_functions = fixture.make_conversation_using_json_text_functions()
 
-        conversation = parse_conversation("conv2", simple_conversation_yaml)
+        conversation = parse_conversation('conv2', simple_conversation_yaml, 'mynamespace:mydir/')
         actual_functions = create_functions(conversation)
 
         self.assertCountEqual(expected_functions, actual_functions)

@@ -4,7 +4,6 @@ from mconv.conversation import Conversation
 from mconv.minecraft.line import Line
 
 
-KEYWORD_FUNCTION_PREFIX = 'function-prefix'
 KEYWORD_SPEAKER_NAME = 'speaker-name'
 KEYWORD_DEFAULT_SPEAK_TIME_SEC = 'default-speak-time-sec'
 KEYWORD_CONVERSATION = 'conversation'
@@ -12,14 +11,13 @@ KEYWORD_SAY = 'say'
 KEYWORD_SPEAK_TIME_SEC = 'speak-time-sec'
 
 
-def parse_conversation(conv_name: str, yaml_conversation: str) -> Conversation:
+def parse_conversation(conv_name: str, yaml_conversation: str, function_prefix: str) -> Conversation:
     yaml = string_to_yaml(yaml_conversation)
-    return yaml_to_conv(conv_name, yaml)
+    return YamlConversationParser(conv_name, yaml, function_prefix).parse_conversation()
 
 
 def string_to_yaml(yaml_conversation: str) -> YAML:
     schema = Map({
-        KEYWORD_FUNCTION_PREFIX: Str(),
         KEYWORD_SPEAKER_NAME: Any(),
         KEYWORD_DEFAULT_SPEAK_TIME_SEC: Int(),
         KEYWORD_CONVERSATION: Seq(
@@ -33,18 +31,15 @@ def string_to_yaml(yaml_conversation: str) -> YAML:
     return dirty_load(yaml_conversation, schema=schema, allow_flow_style=True)
 
 
-def yaml_to_conv(conv_name: str, yaml: YAML) -> Conversation:
-    return YamlConversationParser(conv_name, yaml).parse_conversation()
-
-
 class YamlConversationParser:
-    def __init__(self, conv_name: str, yaml: YAML):
+    def __init__(self, conv_name: str, yaml: YAML, function_prefix: str):
         self.conv_name = conv_name
         self.yaml_data = yaml.data
+        self.function_prefix = function_prefix
         self.default_speak_time_sec = yaml[KEYWORD_DEFAULT_SPEAK_TIME_SEC].value
 
     def parse_conversation(self) -> Conversation:
-        function_prefix = self.yaml_data[KEYWORD_FUNCTION_PREFIX]
+        function_prefix = self.function_prefix
         speaker_name = self.yaml_data[KEYWORD_SPEAKER_NAME]
         yaml_lines = self.yaml_data[KEYWORD_CONVERSATION]
 

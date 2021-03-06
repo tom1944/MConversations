@@ -8,7 +8,6 @@ from mconv.minecraft.line import Line
 
 def make_simple_conversation_yaml() -> str:
     return '\n'.join([
-        'function-prefix: mynamespace:path/to/dir/',
         'speaker-name: Erik',
         'default-speak-time-sec: 2',
         'conversation:',
@@ -22,7 +21,7 @@ def make_simple_conversation_yaml() -> str:
 def make_simple_conversation_object() -> Conversation:
     return Conversation(
         'conv1',
-        'mynamespace:path/to/dir/',
+        'mynamespace:',
         'Erik',
         [
             Line('Hello!', speak_time=2),
@@ -36,16 +35,16 @@ def make_simple_conversation_functions() -> List[Function]:
     return [
             Function(
                 name='conv1',
-                prefix='mynamespace:path/to/dir/',
+                prefix='mynamespace:',
                 commands=[
-                    'function mynamespace:path/to/dir/conv1_1',
-                    'schedule function mynamespace:path/to/dir/conv1_2 2s',
-                    'schedule function mynamespace:path/to/dir/conv1_3 5s',
+                    'function mynamespace:conv1_1',
+                    'schedule function mynamespace:conv1_2 2s',
+                    'schedule function mynamespace:conv1_3 5s',
                 ]
             ),
             Function(
                 name='conv1_1',
-                prefix='mynamespace:path/to/dir/',
+                prefix='mynamespace:',
                 commands=[
                     'tellraw @a ["", '
                     '{"text": "(1/3) ", "color": "gray", "bold": true}, '
@@ -56,7 +55,7 @@ def make_simple_conversation_functions() -> List[Function]:
             ),
             Function(
                 name='conv1_2',
-                prefix='mynamespace:path/to/dir/',
+                prefix='mynamespace:',
                 commands=[
                     'tellraw @a ["", '
                     '{"text": "(2/3) ", "color": "gray", "bold": true}, '
@@ -67,7 +66,7 @@ def make_simple_conversation_functions() -> List[Function]:
             ),
             Function(
                 name='conv1_3',
-                prefix='mynamespace:path/to/dir/',
+                prefix='mynamespace:',
                 commands=[
                     'tellraw @a ["", '
                     '{"text": "(3/3) ", "color": "gray", "bold": true}, '
@@ -81,7 +80,6 @@ def make_simple_conversation_functions() -> List[Function]:
 
 def make_conversation_using_json_text_yaml() -> str:
     return '\n'.join([
-        'function-prefix: mynamespace:mydir/',
         'speaker-name: {"text": "Erik", "color": "red"}',
         'default-speak-time-sec: 2',
         'conversation:',
