@@ -1,4 +1,3 @@
-function-prefix: mynamespace:path/to/dir/
 speaker-name: Erik
 default-speak-time-sec: 2
 conversation:
