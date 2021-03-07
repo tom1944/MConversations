@@ -9,10 +9,7 @@ class FunctionContext:
     def __init__(self, namespace: str, path_in_functions_dir: str, function_name: str):
         self.namespace = namespace
         self.function_name = function_name
-
-        path_in_functions_dir = path_in_functions_dir.strip(os.sep)
-
-        self.path_in_functions_dir = path_in_functions_dir
+        self.path_in_functions_dir = path_in_functions_dir.strip(os.sep)
 
     def as_qualified_function_name(self) -> str:
         if self.path_in_functions_dir == '':
@@ -37,3 +34,6 @@ class FunctionContext:
         return self.namespace == other.namespace \
             and self.path_in_functions_dir == other.path_in_functions_dir\
             and self.function_name == other.function_name
+
+    def __repr__(self):
+        return f'FunctionContext({self.namespace}, {self.path_in_functions_dir}, {self.function_name})'
