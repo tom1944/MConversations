@@ -1,13 +1,16 @@
 from typing import List
 
+from mconv.minecraft.function_context import FunctionContext
+
 FUNCTION_FILE_EXTENSION = 'mcfunction'
 
 
 class Function:
-    def __init__(self, name: str, prefix: str, commands: List[str]):
-        self.name = name
-        self.prefix = prefix
+    def __init__(self, commands: List[str], function_context: FunctionContext):
+        self.name = function_context.function_name  # TODO inline?
+        self.prefix = function_context.function_prefix()  # TODO Remove
         self.commands = commands
+        self.context = function_context
 
     def export_to_file(self):
         file_name = f'{self.name}.{FUNCTION_FILE_EXTENSION}'

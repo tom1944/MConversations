@@ -3,7 +3,9 @@ from collections import OrderedDict
 from typing import List
 
 from mconv.conversation import Conversation
+from mconv.conversation_context import ConversationContext
 from mconv.minecraft.function import Function
+from mconv.minecraft.function_context import FunctionContext
 from mconv.minecraft.json_text import JSONText
 from mconv.minecraft.line import Line
 
@@ -23,15 +25,17 @@ class FunctionCreator:
 
     def _make_line_functions(self) -> List[Function]:
         return [
-            LineFunctionCreator(line, index, conversation_context=self.conversation).create_line()
+            LineFunctionCreator(line, index, self.conversation).create_line()
             for index, line in enumerate(self.conversation.lines, start=1)
         ]
 
     def _make_conversation_function(self, line_functions: List[Function]) -> Function:
         return Function(
-            name=self.conversation.name,
-            prefix=self.conversation.function_prefix,
-            commands=self._make_commands_from_line_functions(line_functions)
+            self._make_commands_from_line_functions(line_functions),
+            _conv_ctx_to_func_ctx(
+                self.conversation.ctx,
+                self.conversation.name
+            )
         )
 
     def _make_commands_from_line_functions(self, line_functions: List[Function]) -> List[str]:
@@ -55,16 +59,21 @@ def _make_schedule_command(func: Function, time: int) -> str:
 
 
 class LineFunctionCreator:
-    def __init__(self, line: Line, index: int, conversation_context: Conversation):   # TODO maak van de parameter een echte conversationcontext
+    def __init__(self, line: Line, index: int, conversation: Conversation):
         self.line = line
         self.index = index
-        self.conversation_context = conversation_context
+        self.conversation = conversation
+        self.conv_ctx = conversation.ctx
 
     def create_line(self) -> Function:
+        function_name = self.conv_ctx.name + '_' + str(self.index)
+
         return Function(
-            name=self.conversation_context.name + '_' + str(self.index),
-            prefix=self.conversation_context.function_prefix,
-            commands=['tellraw @a ' + self._raw_json_text_for_line()]
+            commands=['tellraw @a ' + self._raw_json_text_for_line()],
+            function_context=_conv_ctx_to_func_ctx(
+                self.conv_ctx,
+                function_name
+            )
         )
 
     def _raw_json_text_for_line(self) -> str:
@@ -79,7 +88,7 @@ class LineFunctionCreator:
         return json.dumps(json_text_as_json_object)
 
     def _make_json_text_for_index_part(self) -> JSONText:
-        total_lines = len(self.conversation_context.lines)
+        total_lines = len(self.conversation.lines)
         return OrderedDict([
             ("text", "(" + str(self.index) + "/" + str(total_lines) + ")"),
             ("color", "gray"),
@@ -87,7 +96,7 @@ class LineFunctionCreator:
         ])
 
     def make_json_text_for_speaker_part(self) -> JSONText:
-        speaker_name = self.conversation_context.speaker_name
+        speaker_name = self.conversation.speaker_name
 
         if isinstance(speaker_name, str):
             return OrderedDict([
@@ -106,3 +115,11 @@ class LineFunctionCreator:
             ])
         else:
             return self.line.text
+
+
+def _conv_ctx_to_func_ctx(conv_ctx: ConversationContext, func_name: str) -> FunctionContext:
+    return FunctionContext(
+        conv_ctx.namespace,
+        conv_ctx.path_in_functions_dir,
+        func_name
+    )

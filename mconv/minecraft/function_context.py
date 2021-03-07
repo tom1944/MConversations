@@ -28,6 +28,12 @@ class FunctionContext:
             filename,
         )
 
+    def function_prefix(self) -> str:  # TODO remove
+        if self.path_in_functions_dir == '':
+            return f'{self.namespace}:'
+        else:
+            return f'{self.namespace}:{self.path_in_functions_dir}/'
+
     def __eq__(self, other):
         if not isinstance(other, FunctionContext):
             return False
