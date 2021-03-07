@@ -34,7 +34,7 @@ def make_simple_conversation_object() -> Conversation:
 def make_simple_conversation_functions() -> List[Function]:
     def _make_context_from_function_name(function_name: str) -> FunctionContext:
         return FunctionContext(
-            namespace='mynamespace',  # TODO in variable
+            namespace='mynamespace',
             path_in_functions_dir='',
             function_name=function_name
         )
@@ -114,7 +114,7 @@ def make_conversation_using_json_text_object() -> Conversation:
 def make_conversation_using_json_text_functions() -> List[Function]:
     def _make_context_from_function_name(function_name: str) -> FunctionContext:
         return FunctionContext(
-            namespace='mynamespace',  # TODO in variable
+            namespace='mynamespace',
             path_in_functions_dir='mydir',
             function_name=function_name
         )

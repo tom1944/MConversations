@@ -34,7 +34,7 @@ class FunctionCreator:
             self._make_commands_from_line_functions(line_functions),
             _conv_ctx_to_func_ctx(
                 self.conversation.ctx,
-                self.conversation.name
+                self.conversation.ctx.name
             )
         )
 

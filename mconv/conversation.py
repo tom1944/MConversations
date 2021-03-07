@@ -9,8 +9,6 @@ from mconv.minecraft.line import Line
 class Conversation:
     def __init__(self, conv_ctx: ConversationContext, speaker_name: JSONText, lines: List[Line]):
         self.ctx = conv_ctx
-        self.name = conv_ctx.name  # TODO inline?
-        self.function_prefix = conv_ctx.to_prefix()  # TODO remove
         self.speaker_name = speaker_name
         self.lines = copy.copy(lines)
 

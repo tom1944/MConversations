@@ -11,8 +11,8 @@ class ParseConversationTest(unittest.TestCase):
 
         conversation = parse_conversation(conversation_context, simple_conversation_yaml)
 
+        self.assertEqual(expected_conversation.ctx, conversation.ctx)
         self.assertEqual(expected_conversation.speaker_name, conversation.speaker_name)
-        self.assertEqual(expected_conversation.function_prefix, conversation.function_prefix)
         self.assertEqual(expected_conversation.lines, conversation.lines)
 
     def test_parse_conversation_containing_json_text(self):
@@ -21,8 +21,8 @@ class ParseConversationTest(unittest.TestCase):
 
         conversation = parse_conversation(conversation_context, simple_conversation_yaml)
 
+        self.assertEqual(expected_conversation.ctx, conversation.ctx)
         self.assertEqual(expected_conversation.speaker_name, conversation.speaker_name)
-        self.assertEqual(expected_conversation.function_prefix, conversation.function_prefix)
         self.assertEqual(expected_conversation.lines, conversation.lines)
 
 
