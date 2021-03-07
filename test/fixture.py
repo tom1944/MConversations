@@ -1,11 +1,11 @@
 from collections import OrderedDict
 from typing import List, Tuple
 
-from mconv.conversation import Conversation
-from mconv.conversation_context import ConversationContext
-from mconv.minecraft.function import Function
-from mconv.minecraft.function_context import FunctionContext
-from mconv.minecraft.line import Line
+from mconv.conversation.conversation import Conversation
+from mconv.conversation.conversation_context import ConversationContext
+from mconv.minecraft_lang.function import Function
+from mconv.minecraft_lang.function_context import FunctionContext
+from mconv.conversation.line import Line
 
 
 def make_simple_conversation_yaml() -> Tuple[ConversationContext, str]:

@@ -1,7 +1,7 @@
 import os
 import unittest
 
-from mconv.minecraft.function_context import FunctionContext
+from mconv.minecraft_lang.function_context import FunctionContext
 
 
 class FunctionContextTest(unittest.TestCase):

@@ -1,8 +1,8 @@
 from strictyaml import dirty_load, YAML, Map, Int, Seq, Optional, Any
 
-from mconv.conversation import Conversation
-from mconv.conversation_context import ConversationContext
-from mconv.minecraft.line import Line
+from mconv.conversation.conversation import Conversation
+from mconv.conversation.conversation_context import ConversationContext
+from mconv.conversation.line import Line
 
 
 KEYWORD_SPEAKER_NAME = 'speaker-name'

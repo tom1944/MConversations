@@ -2,12 +2,12 @@ import json
 from collections import OrderedDict
 from typing import List
 
-from mconv.conversation import Conversation
-from mconv.conversation_context import ConversationContext
-from mconv.minecraft.function import Function
-from mconv.minecraft.function_context import FunctionContext
-from mconv.minecraft.json_text import JSONText
-from mconv.minecraft.line import Line
+from mconv.conversation.conversation import Conversation
+from mconv.conversation.conversation_context import ConversationContext
+from mconv.minecraft_lang.function import Function
+from mconv.minecraft_lang.function_context import FunctionContext
+from mconv.minecraft_lang.json_text import JSONText
+from mconv.conversation.line import Line
 
 
 def create_functions(conversation: Conversation) -> List[Function]:
