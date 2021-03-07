@@ -55,7 +55,7 @@ def _make_schedule_command(func: Function, time: int) -> str:
 
 
 class LineFunctionCreator:
-    def __init__(self, line: Line, index: int, conversation_context: Conversation):
+    def __init__(self, line: Line, index: int, conversation_context: Conversation):   # TODO maak van de parameter een echte conversationcontext
         self.line = line
         self.index = index
         self.conversation_context = conversation_context

@@ -22,6 +22,4 @@ class MConvTest(unittest.TestCase):
         conversation = parse_conversation(conversation_context, simple_conversation_yaml)
         actual_functions = create_functions(conversation)
 
-        self.maxDiff = 1000
-
         self.assertCountEqual(expected_functions, actual_functions)

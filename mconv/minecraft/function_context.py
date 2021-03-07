@@ -9,10 +9,7 @@ class FunctionContext:
     def __init__(self, namespace: str, path_in_functions_dir: str, function_name: str):
         self.namespace = namespace
         self.function_name = function_name
-
-        path_in_functions_dir = path_in_functions_dir.strip(os.sep)
-
-        self.path_in_functions_dir = path_in_functions_dir
+        self.path_in_functions_dir = path_in_functions_dir.strip(os.sep)
 
     def as_qualified_function_name(self) -> str:
         if self.path_in_functions_dir == '':
