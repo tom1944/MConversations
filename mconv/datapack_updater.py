@@ -13,7 +13,7 @@ class DatapackUpdater:
     def __init__(self, datapack_path: str):
         self.datapack_path = datapack_path
 
-    def create_conversations_in_datapack(self):
+    def update_conversations_in_datapack(self):
         old_working_dir = os.getcwd()
         os.chdir(self.datapack_path)
         yaml_files = self._find_yaml_files_in_current_working_dir()

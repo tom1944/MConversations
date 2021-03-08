@@ -7,7 +7,7 @@ from mconv.datapack_updater import DatapackUpdater
 class DatapackUpdaterTest(unittest.TestCase):
     def test_datapack_updater(self):
         datapack_updater = DatapackUpdater('example-datapack')
-        datapack_updater.create_conversations_in_datapack()
+        datapack_updater.update_conversations_in_datapack()
 
         files = [os.sep.join(paths) for paths in [
             ['example-datapack', 'data', 'mynamespace', 'functions', 'conv.mcfunction'],
