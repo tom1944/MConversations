@@ -1,3 +1,4 @@
+import os
 from collections import OrderedDict
 from typing import List, Tuple
 
@@ -9,7 +10,7 @@ from mconv.conversation.line import Line
 
 
 def make_simple_conversation_yaml() -> Tuple[ConversationContext, str]:
-    with open('example-datapack/data/mynamespace/functions/conv.yaml') as file:
+    with open(os.sep.join(['example-datapack', 'data', 'mynamespace', 'functions', 'conv.yaml'])) as file:
         yaml = file.read()
 
     return make_conv_ctx_simple_conversation_yaml(), yaml
@@ -82,7 +83,7 @@ def make_simple_conversation_functions() -> List[Function]:
 
 
 def make_conversation_using_json_text_yaml() -> Tuple[ConversationContext, str]:
-    with open('example-datapack/data/mynamespace/functions/mydir/conv-with-json-text.yaml') as file:
+    with open(os.sep.join(['example-datapack', 'data', 'mynamespace', 'functions', 'mydir', 'conv-with-json-text.yaml'])) as file:
         yaml = file.read()
 
     return make_conv_ctx_using_json_text_yaml(), yaml

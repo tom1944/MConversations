@@ -2,8 +2,6 @@ from typing import List
 
 from mconv.minecraft_lang.function_context import FunctionContext
 
-FUNCTION_FILE_EXTENSION = 'mcfunction'
-
 
 class Function:
     def __init__(self, commands: List[str], function_context: FunctionContext):
@@ -11,7 +9,7 @@ class Function:
         self.context = function_context
 
     def export_to_file(self):
-        file_name = f'{self.context.function_name}.{FUNCTION_FILE_EXTENSION}'
+        file_name = self.context.as_filepath_in_datapack()
 
         with open(file_name, 'w') as outfile:
             outfile.write('\n'.join(self.commands))
