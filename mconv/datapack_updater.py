@@ -19,11 +19,8 @@ class DatapackUpdater:
         yaml_files = self._find_yaml_files_in_current_working_dir()
 
         for yaml_file in yaml_files:
-            try:
-                FunctionFilesCreator(yaml_file).generate_mcfunction_files_for_yaml_file()
-                print(f'Successfully processed {yaml_file}')
-            except Exception as e:
-                print(f'Exception while processing {yaml_file}: {e}')
+            FunctionFilesCreator(yaml_file).generate_mcfunction_files_for_yaml_file()
+            print(f'Successfully processed {yaml_file}')
         os.chdir(old_working_dir)
 
     def _find_yaml_files_in_current_working_dir(self) -> Iterator[str]:
@@ -34,7 +31,9 @@ class DatapackUpdater:
             functions_dir = os.path.join(DATAPACK_DATA_DIR, namespace, DATAPACK_FUNCTIONS_DIR)
             if os.path.isdir(functions_dir):
                 for root, dirs, files in os.walk(functions_dir):
+                    root: str
                     for file in files:
+                        file: str
                         if file.endswith(YAML_EXTENSION):
                             yield os.path.join(root, file)
 
@@ -42,6 +41,7 @@ class DatapackUpdater:
 def subdirs(dirname: str) -> Iterator[str]:
     with os.scandir(dirname) as it:
         for entry in it:
+            entry: os.DirEntry
             if entry.is_dir():
                 yield entry.name
 
