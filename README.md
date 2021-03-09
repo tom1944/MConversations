@@ -27,7 +27,7 @@ conversation:
 See the [example-datapack](./example-datapack) directory for an example data pack.
 
 ## Installation
-- Install [Python 3.7](https://www.python.org/downloads/release/python-379/)
+- Install [Python 3.9.2](https://www.python.org/downloads/release/python-392/)
 - Install StrictYAML:
 `pip install strictyaml==1.3.2`
 
