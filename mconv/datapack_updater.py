@@ -66,7 +66,7 @@ class FunctionFilesCreator:
         yaml_filepath = self.yaml_filepath
         data_dir, namespace, functions_dir, filepath_in_functions_dir = yaml_filepath.split(os.sep, maxsplit=3)
         if os.sep in filepath_in_functions_dir:
-            path, filename = filepath_in_functions_dir.rsplit(os.sep)
+            path, filename = filepath_in_functions_dir.rsplit(os.sep, maxsplit=1)
         else:
             path = ''
             filename = filepath_in_functions_dir
