@@ -15,7 +15,7 @@ class FunctionContext:
         if self.path_in_functions_dir == '':
             return f'{self.namespace}:{self.function_name}'
         else:
-            return f'{self.namespace}:{self.path_in_functions_dir}/{self.function_name}'
+            return f'{self.namespace}:{self.path_in_functions_dir.replace(os.sep, "/")}/{self.function_name}'
 
     def as_filepath_in_datapack(self) -> str:
         filename = self.function_name + FUNCTION_FILE_EXTENSION

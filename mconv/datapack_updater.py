@@ -19,11 +19,8 @@ class DatapackUpdater:
         yaml_files = self._find_yaml_files_in_current_working_dir()
 
         for yaml_file in yaml_files:
-            try:
-                FunctionFilesCreator(yaml_file).generate_mcfunction_files_for_yaml_file()
-                print(f'Successfully processed {yaml_file}')
-            except Exception as e:
-                print(f'Exception while processing {yaml_file}: {e}')
+            FunctionFilesCreator(yaml_file).generate_mcfunction_files_for_yaml_file()
+            print(f'Successfully processed {yaml_file}')
         os.chdir(old_working_dir)
 
     def _find_yaml_files_in_current_working_dir(self) -> Iterator[str]:
@@ -66,7 +63,7 @@ class FunctionFilesCreator:
         yaml_filepath = self.yaml_filepath
         data_dir, namespace, functions_dir, filepath_in_functions_dir = yaml_filepath.split(os.sep, maxsplit=3)
         if os.sep in filepath_in_functions_dir:
-            path, filename = filepath_in_functions_dir.rsplit(os.sep)
+            path, filename = filepath_in_functions_dir.rsplit(os.sep, maxsplit=1)
         else:
             path = ''
             filename = filepath_in_functions_dir
