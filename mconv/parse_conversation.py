@@ -4,7 +4,6 @@ from mconv.conversation.conversation import Conversation
 from mconv.conversation.conversation_context import ConversationContext
 from mconv.conversation.line import Line
 
-
 KEYWORD_SPEAKER_NAME = 'speaker-name'
 KEYWORD_DEFAULT_SPEAK_TIME_SEC = 'default-speak-time-sec'
 KEYWORD_CONVERSATION = 'conversation'

@@ -1,9 +1,8 @@
 import os
 from typing import NamedTuple
 
+from mconv.constants import YAML_EXTENSION
 from mconv.minecraft_lang.function_context import DATAPACK_DATA_DIR, DATAPACK_FUNCTIONS_DIR
-
-YAML_EXTENSION = '.yaml'
 
 
 class ConversationContext(NamedTuple):

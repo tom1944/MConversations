@@ -2,8 +2,8 @@ import copy
 from typing import List
 
 from mconv.conversation.conversation_context import ConversationContext
-from mconv.minecraft_lang.json_text import JSONText
 from mconv.conversation.line import Line
+from mconv.minecraft_lang.json_text import JSONText
 
 
 class Conversation:
