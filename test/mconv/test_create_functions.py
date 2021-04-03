@@ -1,7 +1,7 @@
 import unittest
 
 from mconv.create_functions import create_functions
-from test import fixture
+from test.fixture import fixture
 
 
 class CreateFunctionsTest(unittest.TestCase):

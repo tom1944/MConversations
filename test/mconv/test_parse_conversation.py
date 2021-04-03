@@ -1,7 +1,7 @@
 import unittest
 
 from mconv.parse_conversation import parse_conversation
-from test import fixture
+from test.fixture import fixture
 
 
 class ParseConversationTest(unittest.TestCase):
