@@ -2,6 +2,7 @@ import os
 import unittest
 
 from mconv.datapack_updater import DatapackUpdater
+from test.fixture.fixture import make_list_of_generated_function_files
 
 
 class DatapackUpdaterTest(unittest.TestCase):
@@ -9,14 +10,7 @@ class DatapackUpdaterTest(unittest.TestCase):
         datapack_updater = DatapackUpdater('example-datapack')
         datapack_updater.update_conversations_in_datapack()
 
-        files = [os.sep.join(paths) for paths in [
-            ['example-datapack', 'data', 'mynamespace', 'functions', 'conv.mcfunction'],
-            ['example-datapack', 'data', 'mynamespace', 'functions', 'conv_1.mcfunction'],
-            ['example-datapack', 'data', 'mynamespace', 'functions', 'conv_2.mcfunction'],
-            ['example-datapack', 'data', 'mynamespace', 'functions', 'conv_3.mcfunction'],
-            ['example-datapack', 'data', 'mynamespace', 'functions', 'mydir', 'conv-with-json-text.mcfunction'],
-            ['example-datapack', 'data', 'mynamespace', 'functions', 'mydir', 'conv-with-json-text_1.mcfunction'],
-        ]]
+        files = make_list_of_generated_function_files()
 
         for file in files:
             with self.subTest(f'{file}'):

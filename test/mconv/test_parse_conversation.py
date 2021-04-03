@@ -1,29 +1,24 @@
 import unittest
 
 from mconv.parse_conversation import parse_conversation
-from test.fixture import fixture
+from test.fixture.test_case_with_fixtures import TestCaseWithFixture
 
 
-class ParseConversationTest(unittest.TestCase):
-    def test_parse_simple_conversation(self):
-        conversation_context, simple_conversation_yaml = fixture.make_simple_conversation_yaml()
-        expected_conversation = fixture.make_simple_conversation_object()
+class ParseConversationTest(TestCaseWithFixture):
+    def test_parse_conversation(self):
 
-        conversation = parse_conversation(conversation_context, simple_conversation_yaml)
+        for conv_fixture in self.conv_fixtures:
+            with self.subTest(msg=conv_fixture.conv_ctx.name):
+                expected_conversation = conv_fixture.conversation
 
-        self.assertEqual(expected_conversation.ctx, conversation.ctx)
-        self.assertEqual(expected_conversation.speaker_name, conversation.speaker_name)
-        self.assertEqual(expected_conversation.lines, conversation.lines)
+                conversation = parse_conversation(
+                    conv_fixture.conv_ctx,
+                    conv_fixture.yaml
+                )
 
-    def test_parse_conversation_containing_json_text(self):
-        conversation_context, simple_conversation_yaml = fixture.make_conversation_using_json_text_yaml()
-        expected_conversation = fixture.make_conversation_using_json_text_object()
-
-        conversation = parse_conversation(conversation_context, simple_conversation_yaml)
-
-        self.assertEqual(expected_conversation.ctx, conversation.ctx)
-        self.assertEqual(expected_conversation.speaker_name, conversation.speaker_name)
-        self.assertEqual(expected_conversation.lines, conversation.lines)
+                self.assertEqual(expected_conversation.ctx, conversation.ctx)
+                self.assertEqual(expected_conversation.speaker_name, conversation.speaker_name)
+                self.assertEqual(expected_conversation.lines, conversation.lines)
 
 
 if __name__ == '__main__':
