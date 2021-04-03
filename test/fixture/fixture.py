@@ -6,7 +6,7 @@ from mconv.conversation.conversation import Conversation
 from mconv.conversation.conversation_context import ConversationContext
 from mconv.minecraft_lang.function import Function
 from mconv.minecraft_lang.function_context import FunctionContext
-from mconv.conversation.line import Line
+from mconv.conversation.line import TextLine
 
 
 class MConvTestFixture(NamedTuple):
@@ -51,9 +51,9 @@ def make_simple_conv_fixture() -> MConvTestFixture:
         conv_ctx,
         'Erik',
         [
-            Line('Hello!', speak_time=2),
-            Line('This is a very long text that requires 3 seconds of reading time', speak_time=3),
-            Line('This is the end...', speak_time=2)
+            TextLine('Hello!', speak_time=2),
+            TextLine('This is a very long text that requires 3 seconds of reading time', speak_time=3),
+            TextLine('This is the end...', speak_time=2)
         ]
     )
 
@@ -120,7 +120,7 @@ def make_conv_with_json_text_fixture() -> MConvTestFixture:
             ("color", "red"),
         ]),
         lines=[
-            Line(
+            TextLine(
                 OrderedDict([
                     ("text", "Hello!"),
                     ("color", "blue"),

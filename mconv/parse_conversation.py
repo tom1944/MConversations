@@ -2,7 +2,7 @@ from strictyaml import dirty_load, YAML, Map, Int, Seq, Optional, Any
 
 from mconv.conversation.conversation import Conversation
 from mconv.conversation.conversation_context import ConversationContext
-from mconv.conversation.line import Line
+from mconv.conversation.line import Line, TextLine
 
 KEYWORD_SPEAKER_NAME = 'speaker-name'
 KEYWORD_DEFAULT_SPEAK_TIME_SEC = 'default-speak-time-sec'
@@ -52,4 +52,4 @@ class YamlConversationParser:
         else:
             speak_time = self.default_speak_time_sec
 
-        return Line(text, speak_time)
+        return TextLine(text, speak_time)
