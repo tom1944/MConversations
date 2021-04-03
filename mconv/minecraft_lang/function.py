@@ -4,7 +4,7 @@ from mconv.minecraft_lang.function_context import FunctionContext
 
 
 class Function:
-    def __init__(self, commands: List[str], function_context: FunctionContext):  # TODO van deze een meer een NamedTuple maken
+    def __init__(self, commands: List[str], function_context: FunctionContext):
         self.commands = commands
         self.context = function_context
 
