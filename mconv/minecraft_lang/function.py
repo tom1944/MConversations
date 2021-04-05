@@ -8,12 +8,6 @@ class Function:
         self.commands = commands
         self.context = function_context
 
-    def export_to_file(self):
-        file_name = self.context.as_filepath_in_datapack()
-
-        with open(file_name, 'w') as outfile:
-            outfile.write('\n'.join(self.commands))
-
     def get_qualified_function_name(self) -> str:
         return self.context.as_qualified_function_name()
 

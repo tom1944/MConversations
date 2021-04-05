@@ -1,7 +1,7 @@
 # MConversations
-A tool to generate NPC conversations in minecraft using functions in data packs.
+A tool to generate NPC conversations in minecraft.
 
-See [this minecraft wiki page](https://minecraft.gamepedia.com/Data_Pack) for more info about data packs.
+This tool uses minecraft data packs (see [this minecraft wiki page](https://minecraft.gamepedia.com/Data_Pack)).
 
 ## Features
 - Define your conversations in yaml files:
@@ -14,7 +14,7 @@ conversation:
     speak-time-sec: 3
   - say: This is the end...
 ```
-
+- Automatic detection and translation of all conversations for a data pack
 - Support for text formatting using JSON text:
 ```yaml
 speaker-name: {"text": "Erik", "color": "red"}
@@ -22,12 +22,19 @@ default-speak-time-sec: 2
 conversation:
   - say: {"text": "Hello!", "color": "blue"}
 ```
-- Automatic detectation and translation of all conversations for a data pack
+- Support for executing functions within a conversation:
+```yaml
+speaker-name: "John"
+default-speak-time-sec: 2
+conversation:
+  - say: You earned a reward!
+  - function: mynamespace:rewarding-function
+```
 
 See the [example-datapack](./example-datapack) directory for an example data pack.
 
 ## Installation
-- Install [Python 3.7](https://www.python.org/downloads/release/python-379/)
+- Install [Python 3.9.2](https://www.python.org/downloads/release/python-392/)
 - Install StrictYAML:
 `pip install strictyaml==1.3.2`
 
@@ -39,5 +46,5 @@ See the [example-datapack](./example-datapack) directory for an example data pac
 - Run the command `/reload` from your minecraft world to reload your data pack
 - Run the command `/function mynamespace:conv` to play the conversation to all players
 
-
+You can use the [example-datapack](./example-datapack) to bootstrap your datapack.
 
