@@ -4,17 +4,17 @@ from typing import List
 
 from mconv.conversation.conversation import Conversation
 from mconv.conversation.conversation_context import ConversationContext
-from mconv.conversation.line import Line
+from mconv.conversation.line import TextLine, FunctionLine
 from mconv.minecraft_lang.function import Function
 from mconv.minecraft_lang.function_context import FunctionContext
 from mconv.minecraft_lang.json_text import JSONText
 
 
 def create_functions(conversation: Conversation) -> List[Function]:
-    return FunctionCreator(conversation).create_functions()
+    return ConversationFunctionsCreator(conversation).create_functions()
 
 
-class FunctionCreator:
+class ConversationFunctionsCreator:
     def __init__(self, conversation: Conversation):
         self.conversation = conversation
 
@@ -24,9 +24,12 @@ class FunctionCreator:
         return [conv_function] + line_functions
 
     def _make_line_functions(self) -> List[Function]:
+        text_lines = [line for line in self.conversation.lines if isinstance(line, TextLine)]
+        text_line_count = len(text_lines)
+
         return [
-            LineFunctionCreator(line, index, self.conversation).create_line()
-            for index, line in enumerate(self.conversation.lines, start=1)
+            TextLineFunctionCreator(line, index, text_line_count, self.conversation).create_line_function()
+            for index, line in enumerate(text_lines, start=1)
         ]
 
     def _make_conversation_function(self, line_functions: List[Function]) -> Function:
@@ -40,32 +43,42 @@ class FunctionCreator:
 
     def _make_commands_from_line_functions(self, line_functions: List[Function]) -> List[str]:
         commands = []
+        line_func_it = iter(line_functions)
         time = 0
 
-        for line, func in zip(self.conversation.lines, line_functions):
-            commands.append(
-                _make_schedule_command(func, time)
-            )
-            time += line.speak_time
+        for line in self.conversation.lines:
+            if isinstance(line, TextLine):
+                func = next(line_func_it)
+                commands.append(
+                    _make_schedule_command(func.get_qualified_function_name(), time)
+                )
+                time += line.speak_time
+            elif isinstance(line, FunctionLine):
+                commands.append(
+                    _make_schedule_command(line.qualified_function_name, time)
+                )
+            else:
+                raise Exception("Unknown Line subclass")
 
         return commands
 
 
-def _make_schedule_command(func: Function, time: int) -> str:
+def _make_schedule_command(func_name: str, time: int) -> str:
     if time == 0:
-        return f'function {func.get_qualified_function_name()}'
+        return f'function {func_name}'
     else:
-        return f'schedule function {func.get_qualified_function_name()} {time}s'
+        return f'schedule function {func_name} {time}s'
 
 
-class LineFunctionCreator:
-    def __init__(self, line: Line, index: int, conversation: Conversation):
-        self.line = line
+class TextLineFunctionCreator:
+    def __init__(self, text_line: TextLine, index: int, total_text_lines: int, conversation: Conversation):
+        self.text_line = text_line
         self.index = index
+        self.total_text_lines = total_text_lines
         self.conversation = conversation
         self.conv_ctx = conversation.ctx
 
-    def create_line(self) -> Function:
+    def create_line_function(self) -> Function:
         function_name = self.conv_ctx.name + '_' + str(self.index)
 
         return Function(
@@ -79,7 +92,7 @@ class LineFunctionCreator:
     def _raw_json_text_for_line(self) -> str:
         index_part = self._make_json_text_for_index_part()
         index_part['text'] += " "
-        speaker_part = self.make_json_text_for_speaker_part()
+        speaker_part = self._make_json_text_for_speaker_part()
         speaker_part['text'] += ": "
         text_part = self._make_json_text_for_text_part()
 
@@ -90,12 +103,12 @@ class LineFunctionCreator:
     def _make_json_text_for_index_part(self) -> JSONText:
         total_lines = len(self.conversation.lines)
         return OrderedDict([
-            ("text", "(" + str(self.index) + "/" + str(total_lines) + ")"),
+            ("text", "(" + str(self.index) + "/" + str(self.total_text_lines) + ")"),
             ("color", "gray"),
             ("bold", True),
         ])
 
-    def make_json_text_for_speaker_part(self) -> JSONText:
+    def _make_json_text_for_speaker_part(self) -> JSONText:
         speaker_name = self.conversation.speaker_name
 
         if isinstance(speaker_name, str):
@@ -108,13 +121,13 @@ class LineFunctionCreator:
             return speaker_name
 
     def _make_json_text_for_text_part(self) -> JSONText:
-        if isinstance(self.line.text, str):
+        if isinstance(self.text_line.text, str):
             return OrderedDict([
-                ("text", self.line.text),
+                ("text", self.text_line.text),
                 ("color", "yellow"),
             ])
         else:
-            return self.line.text
+            return self.text_line.text
 
 
 def _conv_ctx_to_func_ctx(conv_ctx: ConversationContext, func_name: str) -> FunctionContext:

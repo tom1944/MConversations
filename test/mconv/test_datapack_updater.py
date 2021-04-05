@@ -7,20 +7,22 @@ from test.fixture.fixture import make_list_of_generated_function_files
 
 class DatapackUpdaterTest(unittest.TestCase):
     def test_datapack_updater(self):
-        datapack_updater = DatapackUpdater('example-datapack')
-        datapack_updater.update_conversations_in_datapack()
-
         files = make_list_of_generated_function_files()
 
-        for file in files:
-            with self.subTest(f'{file}'):
-                self.assertTrue(os.path.isfile(file), f'{file} does not exists')
+        try:
+            datapack_updater = DatapackUpdater('example-datapack')
+            datapack_updater.update_conversations_in_datapack()
 
-        for file in files:
-            try:
-                os.remove(file)
-            except FileNotFoundError:
-                pass
+            for file in files:
+                with self.subTest(f'{file}'):
+                    self.assertTrue(os.path.isfile(file), f'{file} does not exists')
+
+        finally:
+            for file in files:
+                try:
+                    os.remove(file)
+                except FileNotFoundError:
+                    pass
 
 
 if __name__ == '__main__':
