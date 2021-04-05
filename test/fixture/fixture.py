@@ -35,8 +35,8 @@ def make_list_of_generated_function_files() -> List[str]:
         ['example-datapack', 'data', 'mynamespace', 'functions', 'conv_3.mcfunction'],
         ['example-datapack', 'data', 'mynamespace', 'functions', 'mydir', 'conv-with-json-text.mcfunction'],
         ['example-datapack', 'data', 'mynamespace', 'functions', 'mydir', 'conv-with-json-text_1.mcfunction'],
-        ['example-datapack', 'data', 'mynamespace', 'functions', 'mydir', 'subdir', 'conv-with-reward_function.mcfunction'],
-        ['example-datapack', 'data', 'mynamespace', 'functions', 'mydir', 'subdir', 'conv-with-reward_function_1.mcfunction'],
+        ['example-datapack', 'data', 'mynamespace', 'functions', 'mydir', 'subdir', 'conv-reward-function.mcfunction'],
+        ['example-datapack', 'data', 'mynamespace', 'functions', 'mydir', 'subdir', 'conv-reward-function_1.mcfunction'],
     ]
 
     return [os.sep.join(path) for path in files]
@@ -184,20 +184,20 @@ def make_conv_with_function_fixture() -> MConvTestFixture:
     functions = [
         Function(
             commands=[
-                'function mynamespace:mydir/conv-with-json-text_1',
+                'function mynamespace:mydir/subdir/conv-reward-function_1',
                 'schedule function mynamespace:rewarding-function 2s'
             ],
-            function_context=fcc.make_function_context('conv-with-json-text')
+            function_context=fcc.make_function_context('conv-reward-function')
         ),
         Function(
             commands=[
                 'tellraw @a ["", '
                 '{"text": "(1/1) ", "color": "gray", "bold": true}, '
-                '{"text": "Erik: ", "color": "yellow", "bold": true}, '
+                '{"text": "John: ", "color": "yellow", "bold": true}, '
                 '{"text": "You earned a reward!", "color": "yellow"}'
                 ']'
             ],
-            function_context=fcc.make_function_context('conv-with-json-text_1')
+            function_context=fcc.make_function_context('conv-reward-function_1')
         ),
     ]
 
