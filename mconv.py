@@ -14,4 +14,4 @@ if __name__ == '__main__':
     datapack_updater.update_datapack()
 
     print(f"Data pack {datapack_path} updated. Run '/reload' from your minecraft game to reload the data pack,")
-    print(f"then run /{GLOBAL_NAMESPACE}:{INIT} to initialize the data pack.")
+    print(f"then run /function {GLOBAL_NAMESPACE}:{INIT} to initialize the data pack.")
