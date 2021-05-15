@@ -36,7 +36,7 @@ def _make_init_function() -> Function:
 def _make_lock_talk_lock_function() -> Function:
     return Function(
         [
-            f'scoreboard players set {TALK_LOCK_TARGET} {GLOBAL_OBJECTIVE} 0'
+            f'scoreboard players set {TALK_LOCK_TARGET} {GLOBAL_OBJECTIVE} 1'
         ],
         _make_function_context(LOCK_TALK_LOCK_FUNCTION)
     )
@@ -45,7 +45,7 @@ def _make_lock_talk_lock_function() -> Function:
 def _make_free_talk_lock_function() -> Function:
     return Function(
         [
-            f'scoreboard players set {TALK_LOCK_TARGET} {GLOBAL_OBJECTIVE} 1'
+            f'scoreboard players set {TALK_LOCK_TARGET} {GLOBAL_OBJECTIVE} 0'
         ],
         _make_function_context(FREE_TALK_LOCK_FUNCTION)
     )

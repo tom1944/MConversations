@@ -203,7 +203,7 @@ def make_conv_with_function_fixture() -> MConvTestFixture:
                 speak_time=2
             ),
             FunctionLine(
-                qualified_function_name='mynamespace:rewarding-function'
+                qualified_function_name='mynamespace:mydir/subdir/rewarding-function'
             )
         ]
     )
@@ -221,7 +221,7 @@ def make_conv_with_function_fixture() -> MConvTestFixture:
             commands=[
                 'function zzz_mconv:lock_talk_lock',
                 'function mynamespace:mydir/subdir/conv-reward-function_1',
-                'schedule function mynamespace:rewarding-function 2s',
+                'schedule function mynamespace:mydir/subdir/rewarding-function 2s',
                 'function zzz_mconv:free_talk_lock',
             ],
             function_context=fcc.make_function_context('conv-reward-function_no_lock')
