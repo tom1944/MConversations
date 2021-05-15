@@ -6,16 +6,21 @@ from mconv.conversion_locator import ConversationFileLocator
 from mconv.create_functions import create_functions
 from mconv.minecraft_lang.function import Function
 from mconv.parse_conversation import parse_conversation
+from mconv.talk_lock_functions import make_talk_lock_functions
 
 
 class DatapackUpdater:
     def __init__(self, datapack_path: str):
         self.datapack_path = datapack_path
 
-    def update_conversations_in_datapack(self):
+    def update_datapack(self):
+        talk_lock_functions = make_talk_lock_functions()
+        self._write_functions(talk_lock_functions)
+        self._update_conversations_in_datapack()
+
+    def _update_conversations_in_datapack(self):
         datapack_path = self.datapack_path
         conversation_ctxs = ConversationFileLocator(datapack_path).locate_conversations_in_datapack()
-
         for ctx in conversation_ctxs:
             yaml = self._read_conversation_file(ctx)
 
@@ -34,7 +39,19 @@ class DatapackUpdater:
 
     def _write_functions(self, functions: List[Function]):
         for function in functions:
-            file_name = os.path.join(self.datapack_path, function.context.as_filepath_in_datapack())
+            context = function.context
+
+            path_to_function_file = os.path.join(
+                self.datapack_path,
+                context.as_path_to_function_file(),
+            )
+
+            file_name = os.path.join(
+                path_to_function_file,
+                context.as_function_file_name(),
+            )
+
+            os.makedirs(path_to_function_file, exist_ok=True)
 
             with open(file_name, 'w') as outfile:
                 outfile.write('\n'.join(function.commands))

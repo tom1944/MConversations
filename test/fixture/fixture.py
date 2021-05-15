@@ -29,6 +29,9 @@ def make_conv_fixtures() -> List[MConvTestFixture]:
 
 def make_list_of_generated_function_files() -> List[str]:
     files = [
+        ['example-datapack', 'data', 'zzz_mconv', 'functions', 'init.mcfunction'],
+        ['example-datapack', 'data', 'zzz_mconv', 'functions', 'lock_talk_lock.mcfunction'],
+        ['example-datapack', 'data', 'zzz_mconv', 'functions', 'free_talk_lock.mcfunction'],
         ['example-datapack', 'data', 'mynamespace', 'functions', 'conv.mcfunction'],
         ['example-datapack', 'data', 'mynamespace', 'functions', 'conv_1.mcfunction'],
         ['example-datapack', 'data', 'mynamespace', 'functions', 'conv_2.mcfunction'],
@@ -36,7 +39,7 @@ def make_list_of_generated_function_files() -> List[str]:
         ['example-datapack', 'data', 'mynamespace', 'functions', 'mydir', 'conv-with-json-text.mcfunction'],
         ['example-datapack', 'data', 'mynamespace', 'functions', 'mydir', 'conv-with-json-text_1.mcfunction'],
         ['example-datapack', 'data', 'mynamespace', 'functions', 'mydir', 'subdir', 'conv-reward-function.mcfunction'],
-        ['example-datapack', 'data', 'mynamespace', 'functions', 'mydir', 'subdir', 'conv-reward-function_1.mcfunction'],
+        ['example-datapack', 'data', 'mynamespace', 'functions', 'mydir', 'subdir', 'conv-reward-function_1.mcfunction']
     ]
 
     return [os.sep.join(path) for path in files]

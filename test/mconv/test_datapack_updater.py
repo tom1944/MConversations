@@ -11,7 +11,7 @@ class DatapackUpdaterTest(unittest.TestCase):
 
         try:
             datapack_updater = DatapackUpdater('example-datapack')
-            datapack_updater.update_conversations_in_datapack()
+            datapack_updater.update_datapack()
 
             for file in files:
                 with self.subTest(f'{file}'):

@@ -10,6 +10,6 @@ if __name__ == "__main__":
     datapack_path = sys.argv[1]
 
     datapack_updater = DatapackUpdater(datapack_path)
-    datapack_updater.update_conversations_in_datapack()
+    datapack_updater.update_datapack()
 
     print(f"Data pack {datapack_path} updated. Run '/reload' from your minecraft game to reload the data pack")

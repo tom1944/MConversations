@@ -8,8 +8,8 @@ DATAPACK_FUNCTIONS_DIR = 'functions'
 class FunctionContext:
     def __init__(self, namespace: str, path_in_functions_dir: str, function_name: str):
         self.namespace = namespace
-        self.function_name = function_name
         self.path_in_functions_dir = path_in_functions_dir.strip(os.sep)
+        self.function_name = function_name
 
     def as_qualified_function_name(self) -> str:
         if self.path_in_functions_dir == '':
@@ -17,16 +17,18 @@ class FunctionContext:
         else:
             return f'{self.namespace}:{self.path_in_functions_dir.replace(os.sep, "/")}/{self.function_name}'
 
-    def as_filepath_in_datapack(self) -> str:
-        filename = self.function_name + FUNCTION_FILE_EXTENSION
-
-        return os.path.join(
+    def as_path_to_function_file(self) -> str:
+        path = os.path.join(
             DATAPACK_DATA_DIR,
             self.namespace,
             DATAPACK_FUNCTIONS_DIR,
             self.path_in_functions_dir,
-            filename,
         )
+
+        return path.strip(os.sep)
+
+    def as_function_file_name(self) -> str:
+        return self.function_name + FUNCTION_FILE_EXTENSION
 
     def __eq__(self, other):
         if not isinstance(other, FunctionContext):
