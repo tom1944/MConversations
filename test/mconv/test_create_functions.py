@@ -30,10 +30,19 @@ class CreateFunctionsTest(TestCaseWithFixture):
         expected_functions = [
             Function(
                 commands=[
-                    'function other-namespace:reward-function',
-                    'function namespace:conv-name_1',
+                    'execute if score %talk_lock zzz_mconv matches 0 run function'
+                    ' namespace:conv-name_no_lock'
                 ],
                 function_context=FunctionContext('namespace', '', 'conv-name')
+            ),
+            Function(
+                commands=[
+                    'function zzz_mconv:lock_talk_lock',
+                    'function other-namespace:reward-function',
+                    'function namespace:conv-name_1',
+                    'function zzz_mconv:free_talk_lock',
+                ],
+                function_context=FunctionContext('namespace', '', 'conv-name_no_lock')
             ),
             Function(
                 commands=[

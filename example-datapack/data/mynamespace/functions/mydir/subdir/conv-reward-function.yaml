@@ -2,4 +2,4 @@ speaker-name: "John"
 default-speak-time-sec: 2
 conversation:
   - say: You earned a reward!
-  - function: mynamespace:rewarding-function
+  - function: mynamespace:mydir/subdir/rewarding-function

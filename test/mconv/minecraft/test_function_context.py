@@ -9,9 +9,10 @@ class FunctionContextTest(unittest.TestCase):
         function_context = FunctionContext('mynamespace', '', 'conv')
 
         self.assertEqual('mynamespace:conv', function_context.as_qualified_function_name())
+        self.assertEqual('conv.mcfunction', function_context.as_function_file_name())
         self.assertEqual(
-            os.path.join('data', 'mynamespace', 'functions', 'conv.mcfunction'),
-            function_context.as_filepath_in_datapack()
+            os.path.join('data', 'mynamespace', 'functions'),
+            function_context.as_path_to_function_file()
         )
 
     def test_function_context_with_path_in_functions_dir(self):
@@ -24,8 +25,8 @@ class FunctionContextTest(unittest.TestCase):
             with self.subTest():
                 self.assertEqual('mynamespace:mydir/conv-with-json-text', function_context.as_qualified_function_name())
                 self.assertEqual(
-                    os.path.join('data', 'mynamespace', 'functions', 'mydir', 'conv-with-json-text.mcfunction'),
-                    function_context.as_filepath_in_datapack()
+                    os.path.join('data', 'mynamespace', 'functions', 'mydir'),
+                    function_context.as_path_to_function_file()
                 )
 
 

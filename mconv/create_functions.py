@@ -8,6 +8,8 @@ from mconv.conversation.line import TextLine, FunctionLine
 from mconv.minecraft_lang.function import Function
 from mconv.minecraft_lang.function_context import FunctionContext
 from mconv.minecraft_lang.json_text import JSONText
+from mconv.talk_lock_functions import make_command_that_executes_function_if_talk_lock_is_free, \
+    LOCK_TALK_LOCK_FUNCTION, GLOBAL_NAMESPACE, FREE_TALK_LOCK_FUNCTION
 
 
 def create_functions(conversation: Conversation) -> List[Function]:
@@ -21,7 +23,8 @@ class ConversationFunctionsCreator:
     def create_functions(self) -> List[Function]:
         line_functions = self._make_line_functions()
         conv_function = self._make_conversation_function(line_functions)
-        return [conv_function] + line_functions
+        guard_function = self._make_guard_function(conv_function)
+        return [guard_function, conv_function] + line_functions
 
     def _make_line_functions(self) -> List[Function]:
         text_lines = [line for line in self.conversation.lines if isinstance(line, TextLine)]
@@ -34,17 +37,21 @@ class ConversationFunctionsCreator:
 
     def _make_conversation_function(self, line_functions: List[Function]) -> Function:
         return Function(
-            self._make_commands_from_line_functions(line_functions),
+            self._make_commands_for_line_functions(line_functions),
             _conv_ctx_to_func_ctx(
                 self.conversation.ctx,
-                self.conversation.ctx.name
+                self.conversation.ctx.name + '_no_lock'
             )
         )
 
-    def _make_commands_from_line_functions(self, line_functions: List[Function]) -> List[str]:
+    def _make_commands_for_line_functions(self, line_functions: List[Function]) -> List[str]:
         commands = []
         line_func_it = iter(line_functions)
         time = 0
+
+        commands.append(
+            _make_schedule_command(f'{GLOBAL_NAMESPACE}:{LOCK_TALK_LOCK_FUNCTION}', time)
+        )
 
         for line in self.conversation.lines:
             if isinstance(line, TextLine):
@@ -52,7 +59,8 @@ class ConversationFunctionsCreator:
                 commands.append(
                     _make_schedule_command(func.get_qualified_function_name(), time)
                 )
-                time += line.speak_time
+                speak_time = line.speak_time
+                time += speak_time
             elif isinstance(line, FunctionLine):
                 commands.append(
                     _make_schedule_command(line.qualified_function_name, time)
@@ -60,7 +68,24 @@ class ConversationFunctionsCreator:
             else:
                 raise Exception("Unknown Line subclass")
 
+        time -= speak_time
+
+        commands.append(
+            _make_schedule_command(f'{GLOBAL_NAMESPACE}:{FREE_TALK_LOCK_FUNCTION}', time)
+        )
+
         return commands
+
+    def _make_guard_function(self, conv_function: Function) -> Function:
+        context = self.conversation.ctx
+        conv_function_name = conv_function.context.as_qualified_function_name()
+
+        return Function(
+            [
+                make_command_that_executes_function_if_talk_lock_is_free(conv_function_name)
+            ],
+            _conv_ctx_to_func_ctx(context, context.name)
+        )
 
 
 def _make_schedule_command(func_name: str, time: int) -> str:
@@ -101,7 +126,6 @@ class TextLineFunctionCreator:
         return json.dumps(json_text_as_json_object)
 
     def _make_json_text_for_index_part(self) -> JSONText:
-        total_lines = len(self.conversation.lines)
         return OrderedDict([
             ("text", "(" + str(self.index) + "/" + str(self.total_text_lines) + ")"),
             ("color", "gray"),
