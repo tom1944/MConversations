@@ -1,4 +1,5 @@
 import os
+import shutil
 import unittest
 
 from mconv.datapack_updater import DatapackUpdater
@@ -23,6 +24,13 @@ class DatapackUpdaterTest(unittest.TestCase):
                     os.remove(file)
                 except FileNotFoundError:
                     pass
+
+            try:
+                shutil.rmtree(
+                    os.path.join('example-datapack', 'data', 'zzz_mconv')
+                )
+            except FileNotFoundError:
+                pass
 
 
 if __name__ == '__main__':

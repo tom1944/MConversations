@@ -8,3 +8,4 @@ class TestCaseWithFixture(unittest.TestCase):
     def setUp(self):
         self.conv_fixtures: List[MConvTestFixture]
         self.conv_fixtures = make_conv_fixtures()
+        self.maxDiff = 2000

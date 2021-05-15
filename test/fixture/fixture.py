@@ -28,18 +28,26 @@ def make_conv_fixtures() -> List[MConvTestFixture]:
 
 
 def make_list_of_generated_function_files() -> List[str]:
+    files_in_data_dir = [
+        ['zzz_mconv', 'functions', 'init.mcfunction'],
+        ['zzz_mconv', 'functions', 'lock_talk_lock.mcfunction'],
+        ['zzz_mconv', 'functions', 'free_talk_lock.mcfunction'],
+        ['mynamespace', 'functions', 'conv.mcfunction'],
+        ['mynamespace', 'functions', 'conv_no_lock.mcfunction'],
+        ['mynamespace', 'functions', 'conv_1.mcfunction'],
+        ['mynamespace', 'functions', 'conv_2.mcfunction'],
+        ['mynamespace', 'functions', 'conv_3.mcfunction'],
+        ['mynamespace', 'functions', 'mydir', 'conv-with-json-text.mcfunction'],
+        ['mynamespace', 'functions', 'mydir', 'conv-with-json-text_no_lock.mcfunction'],
+        ['mynamespace', 'functions', 'mydir', 'conv-with-json-text_1.mcfunction'],
+        ['mynamespace', 'functions', 'mydir', 'subdir', 'conv-reward-function.mcfunction'],
+        ['mynamespace', 'functions', 'mydir', 'subdir', 'conv-reward-function_no_lock.mcfunction'],
+        ['mynamespace', 'functions', 'mydir', 'subdir', 'conv-reward-function_1.mcfunction']
+    ]
+
     files = [
-        ['example-datapack', 'data', 'zzz_mconv', 'functions', 'init.mcfunction'],
-        ['example-datapack', 'data', 'zzz_mconv', 'functions', 'lock_talk_lock.mcfunction'],
-        ['example-datapack', 'data', 'zzz_mconv', 'functions', 'free_talk_lock.mcfunction'],
-        ['example-datapack', 'data', 'mynamespace', 'functions', 'conv.mcfunction'],
-        ['example-datapack', 'data', 'mynamespace', 'functions', 'conv_1.mcfunction'],
-        ['example-datapack', 'data', 'mynamespace', 'functions', 'conv_2.mcfunction'],
-        ['example-datapack', 'data', 'mynamespace', 'functions', 'conv_3.mcfunction'],
-        ['example-datapack', 'data', 'mynamespace', 'functions', 'mydir', 'conv-with-json-text.mcfunction'],
-        ['example-datapack', 'data', 'mynamespace', 'functions', 'mydir', 'conv-with-json-text_1.mcfunction'],
-        ['example-datapack', 'data', 'mynamespace', 'functions', 'mydir', 'subdir', 'conv-reward-function.mcfunction'],
-        ['example-datapack', 'data', 'mynamespace', 'functions', 'mydir', 'subdir', 'conv-reward-function_1.mcfunction']
+        ['example-datapack', 'data'] + path
+        for path in files_in_data_dir
     ]
 
     return [os.sep.join(path) for path in files]
@@ -68,11 +76,19 @@ def make_simple_conv_fixture() -> MConvTestFixture:
     functions = [
         Function(
             commands=[
+                'execute if score %talk_lock zzz_mconv matches 0 run function mynamespace:conv_no_lock'
+            ],
+            function_context=fcc.make_function_context('conv')
+        ),
+        Function(
+            commands=[
+                'function zzz_mconv:lock_talk_lock',
                 'function mynamespace:conv_1',
                 'schedule function mynamespace:conv_2 2s',
                 'schedule function mynamespace:conv_3 5s',
+                'schedule function zzz_mconv:free_talk_lock 5s',
             ],
-            function_context=fcc.make_function_context('conv')
+            function_context=fcc.make_function_context('conv_no_lock')
         ),
         Function(
             commands=[
@@ -140,8 +156,18 @@ def make_conv_with_json_text_fixture() -> MConvTestFixture:
 
     functions = [
         Function(
-            commands=['function mynamespace:mydir/conv-with-json-text_1'],
+            commands=[
+                'execute if score %talk_lock zzz_mconv matches 0 run function mynamespace:mydir/conv-with-json-text_no_lock'
+            ],
             function_context=fcc.make_function_context('conv-with-json-text')
+        ),
+        Function(
+            commands=[
+                'function zzz_mconv:lock_talk_lock',
+                'function mynamespace:mydir/conv-with-json-text_1',
+                'function zzz_mconv:free_talk_lock',
+            ],
+            function_context=fcc.make_function_context('conv-with-json-text_no_lock')
         ),
         Function(
             commands=[
@@ -187,10 +213,18 @@ def make_conv_with_function_fixture() -> MConvTestFixture:
     functions = [
         Function(
             commands=[
-                'function mynamespace:mydir/subdir/conv-reward-function_1',
-                'schedule function mynamespace:rewarding-function 2s'
+                'execute if score %talk_lock zzz_mconv matches 0 run function mynamespace:mydir/subdir/conv-reward-function_no_lock'
             ],
             function_context=fcc.make_function_context('conv-reward-function')
+        ),
+        Function(
+            commands=[
+                'function zzz_mconv:lock_talk_lock',
+                'function mynamespace:mydir/subdir/conv-reward-function_1',
+                'schedule function mynamespace:rewarding-function 2s',
+                'function zzz_mconv:free_talk_lock',
+            ],
+            function_context=fcc.make_function_context('conv-reward-function_no_lock')
         ),
         Function(
             commands=[
